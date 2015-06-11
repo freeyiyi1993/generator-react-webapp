@@ -2,6 +2,8 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var path  = require('path');
+
 
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
@@ -9,19 +11,23 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the marvelous ' + chalk.red('ReactWebapp') + ' generator!'
+      'Welcome to ' + chalk.red('React.js')
     ));
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+    var root = this.destinationRoot();
+
+    var prompts = [
+      {
+        name: 'appName',
+        message: 'What\'s the name of your web app?',
+        default: path.basename(root)
+      }
+    ];
 
     this.prompt(prompts, function (props) {
       this.props = props;
       // To access props later use this.props.someOption;
+      this.appName = props.appName;
 
       done();
     }.bind(this));
@@ -29,9 +35,22 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
+      this.fs.copyTpl(
+        this.templatePath('package.json'),
+        this.destinationPath('package.json'),
+        {
+          appName: this.appName
+        }
+      );
+
       this.fs.copy(
-        this.templatePath('_package.json'),
-        this.destinationPath('package.json')
+        this.templatePath('etc'),
+        this.destinationPath('etc')
+      );
+
+      this.fs.copy(
+        this.templatePath('webpack.config.js'),
+        this.destinationPath('webpack.config.js')
       );
     },
 
@@ -40,14 +59,35 @@ module.exports = yeoman.generators.Base.extend({
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
       );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );
     }
   },
 
   install: function () {
-    this.installDependencies();
+    this.npmInstall([
+      'alt',
+      'debug',
+      'es6-shim',
+      'react',
+      'react-router',
+      'whatwg-fetch'
+    ], {
+      'save': true
+    });
+
+    this.npmInstall([
+      'autoprefixer-loader',
+      'babel-core',
+      'babel-loader',
+      'css-loader',
+      'file-loader',
+      'html-webpack-plugin',
+      'node-libs-browser',
+      'react-hot-loader',
+      'style-loader',
+      'webpack',
+      'webpack-dev-server'
+    ], {
+      'saveDev': true
+    });
   }
 });

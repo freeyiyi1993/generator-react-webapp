@@ -1,0 +1,7 @@
+{
+  "name": "<%= appName %>",
+  "version": "0.1.0",
+  "description": "React biolerplate backed by webpack",
+  "dependencies": {}
+}
+
