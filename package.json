@@ -1,0 +1,30 @@
+{
+  "name": "generator-react-webapp",
+  "version": "0.1.0",
+  "description": "Yeoman generator for React + Flux (Alt) project, backed by webpack.",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "jimzhan/generator-react-webapp",
+  "author": {
+    "name": "Jim Zhan",
+    "email": "jim.zhan@me.com",
+    "url": "https://github.com/jimzhan"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "*",
+    "chalk": "*",
+    "yosay": "*"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}
