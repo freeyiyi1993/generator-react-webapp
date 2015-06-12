@@ -20,8 +20,9 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "*",
     "chalk": "*",
+    "lodash": "^3.9.3",
+    "yeoman-generator": "*",
     "yosay": "*"
   },
   "devDependencies": {
